@@ -1,0 +1,1 @@
+add_library(connect4_lib Connect4Board.cpp Connect4ControllerProxy.cpp Connect4Game.cpp)
