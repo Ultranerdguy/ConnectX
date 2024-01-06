@@ -9,7 +9,7 @@ namespace Connect4
 
   // Token{} is no player
   // Valid tokens can be created by pre-incrementing
-  // Tokens only really need to support equality and pre-increment
+  // Tokens only need to support equality and pre-increment
   using Token = unsigned int;
 }
 
