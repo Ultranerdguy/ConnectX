@@ -1,9 +1,9 @@
-#ifndef _CONNECT_4_CONTROLLER_PROXY_HPP_
-#define _CONNECT_4_CONTROLLER_PROXY_HPP_
+#ifndef _CONNECT_X_CONTROLLER_PROXY_HPP_
+#define _CONNECT_X_CONTROLLER_PROXY_HPP_
 
-#include "Connect4IController.hpp"
+#include "IController.hpp"
 
-namespace Connect4
+namespace ConnectX
 {
   class ControllerProxy : public IController
   {
@@ -18,6 +18,4 @@ namespace Connect4
   };
 }
 
-#endif // #ifndef _CONNECT_4_CONTROLLER_PROXY_HPP_
-
-
+#endif // #ifndef _CONNECT_X_CONTROLLER_PROXY_HPP_

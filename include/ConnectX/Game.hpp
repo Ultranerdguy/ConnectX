@@ -1,13 +1,13 @@
-#ifndef _CONNECT_4_GAME_HPP_
-#define _CONNECT_4_GAME_HPP_
+#ifndef _CONNECT_X_GAME_HPP_
+#define _CONNECT_X_GAME_HPP_
 
 #include <vector>
 #include <memory>
-#include "Connect4Types.hpp"
-#include "Connect4Board.hpp"
-#include "Connect4IController.hpp"
+#include "Types.hpp"
+#include "Board.hpp"
+#include "IController.hpp"
 
-namespace Connect4
+namespace ConnectX
 {
   class Game
   {
@@ -32,9 +32,9 @@ namespace Connect4
 }
 
 template <typename TController, typename ...TArgs>
-void Connect4::Game::AddPlayer(Connect4::Token playerID, TArgs... args)
+void ConnectX::Game::AddPlayer(ConnectX::Token playerID, TArgs... args)
 {
   m_players.push_back({playerID, std::make_unique<TController>(args...)});
 }
 
-#endif // #ifndef _CONNECT_4_GAME_HPP_
+#endif // #ifndef _CONNECT_X_GAME_HPP_

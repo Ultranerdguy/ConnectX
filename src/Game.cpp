@@ -1,11 +1,11 @@
-#include "Connect4Game.hpp"
+#include "ConnectX/Game.hpp"
 
-Connect4::Game::Game(std::size_t const width, std::size_t const height)
+ConnectX::Game::Game(std::size_t const width, std::size_t const height)
 {
   m_board.SetSize(width, height); // Standard board size
 }
 
-Connect4::Token Connect4::Game::PlayRound()
+ConnectX::Token ConnectX::Game::PlayRound()
 {
   std::vector<Input> badInputs;
   for (std::size_t i = 0; i < m_board.GetWidth(); ++i)
@@ -32,7 +32,7 @@ Connect4::Token Connect4::Game::PlayRound()
   return winner;
 }
 
-Connect4::Board const& Connect4::Game::GetBoard() const
+ConnectX::Board const& ConnectX::Game::GetBoard() const
 {
   return m_board;
 }
