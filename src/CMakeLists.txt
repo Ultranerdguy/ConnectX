@@ -1,1 +1,6 @@
-add_library(connectX_lib Board.cpp ControllerProxy.cpp Game.cpp)
+add_library(connectX_lib 
+  BoardProxy.cpp
+  ControllerProxy.cpp 
+  RefereeProxy.cpp
+  DenseBoard.cpp 
+  Game.cpp)

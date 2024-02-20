@@ -9,6 +9,7 @@ class Game {
   -IController[] players
   -IReferee ruleset
   -IBoard board
+  +RunGame() IController
   +AddPlayer(in IController newplayer, in ...args)
   +SetReferee(in IReferee newReferee)
   +SetBoard(in IBoard newBoard)
@@ -21,12 +22,14 @@ namespace Interfaces {
   class IController
   class IReferee
   class IBoard
+  class INotify
 }
+
 
 class IController {
   <<interface>>
-  +AssignToken(in Token token)*
-  +GetMove(in IBoard board) Vector*
+  +AssignToken(in const Token token)*
+  +GetMove(in const IBoard board) Vector*
   +OnWin()*
   +OnLose()*
   +OnDraw()*
@@ -34,15 +37,26 @@ class IController {
 
 class IReferee {
   <<interface>>
-  
+  +Init(in IController[] players, in IBoard board)*
+  +GetCurrentPlayer() IController*
+  +PlayGame() IController**
 }
 
 class IBoard {
   <<interface>>
-  +GetWidth() Vector*
-  +GetAt(in Vector position) Token*
-  +GetRange(in Vector offset, in Vector size) TokenBuffer*
-  +DropToken(in Vector position, in Token token) bool*
+  +GetScale() Vector*
+  +GetAt(in const Vector position) Token*
+  +SetAt(in constVector position, in const Token token)*
+  +GetRange(in const Vector offset, in const Vector size) TokenBuffer*
+}
+
+note for INotify "For event callbacks. Currently<br/>not implemented, but proposed."
+class INotify {
+  <<interface>>
+  +OnStartGame()*
+  +OnStartTurn(in const IController player)*
+  +OnEndTurn(int const IController player)*
+  +OnEndGame()*
 }
 
 namespace Proxies {

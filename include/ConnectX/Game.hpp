@@ -4,37 +4,44 @@
 #include <vector>
 #include <memory>
 #include "Types.hpp"
-#include "Board.hpp"
+#include "IReferee.hpp"
+#include "IBoard.hpp"
 #include "IController.hpp"
 
-namespace ConnectX
-{
-  class Game
-  {
+namespace ConnectX {
+  class Game {
   public:
-    Game(std::size_t const width = 7, std::size_t const height = 6);
-    
-    template <typename TController, typename ...TArgs>
-    void AddPlayer(Token playerID, TArgs... args);
-    Token PlayRound();
-    Board const& GetBoard() const;
+    IController* RunGame();
+
+    template <Concept::Controller TController, typename ...TArgs>
+    void AddPlayer(TArgs... args);
+
+    template <Concept::Board TBoard, typename ...TArgs>
+    void SetBoard(TArgs... args);
+
+    template <Concept::Referee TReferee, typename ...TArgs>
+    void SetReferee(TArgs... args);
 
   private:
-    struct PlayerTokenPair
-    {
-      Token token;
-      std::unique_ptr<IController> pPlayer;
-    };
-    Board m_board;
-    std::vector<PlayerTokenPair> m_players;
-    std::size_t m_currentPlayerIndex = 0;
+    std::unique_ptr<IReferee> m_referee;
+    std::unique_ptr<IBoard> m_board;
+    std::vector<std::unique_ptr<IController>> m_players;
   };
 }
 
-template <typename TController, typename ...TArgs>
-void ConnectX::Game::AddPlayer(ConnectX::Token playerID, TArgs... args)
-{
-  m_players.push_back({playerID, std::make_unique<TController>(args...)});
+template <ConnectX::Concept::Controller TController, typename ...TArgs>
+void ConnectX::Game::AddPlayer(TArgs... args) {
+  m_players.push_back(std::make_unique<TController>(args...));
+}
+
+template <ConnectX::Concept::Board TBoard, typename ...TArgs>
+void ConnectX::Game::SetBoard(TArgs... args) {
+  m_board = std::make_unique<TBoard>(args...);
+}
+
+template <ConnectX::Concept::Referee TReferee, typename ...TArgs>
+void ConnectX::Game::SetReferee(TArgs... args) {
+  m_referee = std::make_unique<TReferee>(args...);
 }
 
 #endif // #ifndef _CONNECT_X_GAME_HPP_

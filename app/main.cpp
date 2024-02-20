@@ -1,11 +1,8 @@
 #include <cstdio>
 #include "ConnectX/Game.hpp"
-#include "ConnectX/IController.hpp"
 
-int main()
-{
+int main() {
   ConnectX::Game game;
-  ConnectX::Token id;
 
   printf("connectX::main()\n");
   

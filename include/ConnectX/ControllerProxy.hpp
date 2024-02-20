@@ -10,9 +10,6 @@ namespace ConnectX
   public:
     ControllerProxy(IController& controller);
 
-    virtual Input GetInput(Board const& board, std::vector<Input> const& badInputs) override;
-    virtual void EndGame(bool const win) override;
-
   private:
     IController& m_controller;
   };
