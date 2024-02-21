@@ -9,6 +9,11 @@ namespace ConnectX
   {
   public:
     RefereeProxy(IReferee& referee);
+    
+    virtual void AddPlayer(IController& player) override;
+    virtual void SetBoard(IBoard& board) override;
+    virtual IController* GetCurrentPlayer() const override;
+    virtual IController* PlayGame() override;
 
   private:
     IReferee& m_referee;

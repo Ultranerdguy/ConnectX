@@ -8,7 +8,8 @@
 
 namespace ConnectX {
   struct IReferee {
-    virtual void Init(IController* players, std::size_t playerCount, IBoard& board) = 0;
+    virtual void AddPlayer(IController& player) = 0;
+    virtual void SetBoard(IBoard& board) = 0;
     virtual IController* GetCurrentPlayer() const = 0;
     virtual IController* PlayGame() = 0;
   };

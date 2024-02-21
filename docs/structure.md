@@ -35,19 +35,20 @@ class IController {
   +OnDraw()*
 } 
 
-class IReferee {
-  <<interface>>
-  +Init(in IController[] players, in IBoard board)*
-  +GetCurrentPlayer() IController*
-  +PlayGame() IController**
-}
-
 class IBoard {
   <<interface>>
   +GetScale() Vector*
   +GetAt(in const Vector position) Token*
   +SetAt(in constVector position, in const Token token)*
   +GetRange(in const Vector offset, in const Vector size) TokenBuffer*
+}
+
+class IReferee {
+  <<interface>>
+  +AddPlayer(in IController player);*
+  +SetBoard(in IBoard board)*;
+  +GetCurrentPlayer() IController*
+  +PlayGame() IController**
 }
 
 note for INotify "For event callbacks. Currently<br/>not implemented, but proposed."
