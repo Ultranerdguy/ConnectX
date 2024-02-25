@@ -1,5 +1,5 @@
-#ifndef _CONNECT_X_ZERO_CONTROLLER_HPP_
-#define _CONNECT_X_ZERO_CONTROLLER_HPP_
+#ifndef _CONNECT_X_TESTS_ZERO_CONTROLLER_HPP_
+#define _CONNECT_X_TESTS_ZERO_CONTROLLER_HPP_
 
 #include "ConnectX/IController.hpp"
 
@@ -20,4 +20,4 @@ public:
   }
 };
 
-#endif // #ifndef _CONNECT_X_ZERO_CONTROLLER_HPP_
+#endif // #ifndef _CONNECT_X_TESTS_ZERO_CONTROLLER_HPP_

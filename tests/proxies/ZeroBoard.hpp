@@ -1,5 +1,5 @@
-#ifndef _CONNECT_X_ZERO_BOARD_HPP_
-#define _CONNECT_X_ZERO_BOARD_HPP_
+#ifndef _CONNECT_X_TESTS_ZERO_BOARD_HPP_
+#define _CONNECT_X_TESTS_ZERO_BOARD_HPP_
 
 #include "ConnectX/IBoard.hpp"
 
@@ -7,7 +7,10 @@
 class ZeroBoard : public ConnectX::IBoard
 { 
 public:
-  virtual ConnectX::Vector GetScale() const override {
+  virtual ConnectX::Vector GetStart() const override {
+    return {};
+  }
+  virtual ConnectX::SizeVector GetSize() const override {
     return {};
   }
   virtual ConnectX::Token GetAt(ConnectX::Vector const& position) const override {
@@ -15,9 +18,9 @@ public:
   }
   virtual void SetAt(ConnectX::Vector const& position, ConnectX::Token const token) override {
   }
-  virtual ConnectX::TokenBuffer GetRange(ConnectX::Vector const& start, ConnectX::Vector const& size) const override {
+  virtual ConnectX::TokenBuffer GetRange(ConnectX::Vector const& start, ConnectX::SizeVector const& size) const override {
     return {};
   }
 };
 
-#endif // #ifndef _CONNECT_X_ZERO_BOARD_HPP_
+#endif // #ifndef _CONNECT_X_TESTS_ZERO_BOARD_HPP_

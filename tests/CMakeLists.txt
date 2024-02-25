@@ -1,16 +1,1 @@
-include(CTest)
-
-add_executable(ControllerProxyPassthroughTester ControllerProxyPassthroughTester.cpp)
-target_link_libraries(ControllerProxyPassthroughTester connectX_lib)
-
-add_test(NAME ControllerProxyPassthroughTest COMMAND $<TARGET_FILE:ControllerProxyPassthroughTester>)
-
-add_executable(BoardProxyPassthroughTester BoardProxyPassthroughTester.cpp)
-target_link_libraries(BoardProxyPassthroughTester connectX_lib)
-
-add_test(NAME BoardProxyPassthroughTest COMMAND $<TARGET_FILE:BoardProxyPassthroughTester>)
-
-add_executable(RefereeProxyPassthroughTester RefereeProxyPassthroughTester.cpp)
-target_link_libraries(RefereeProxyPassthroughTester connectX_lib)
-
-add_test(NAME RefereeProxyPassthroughTest COMMAND $<TARGET_FILE:RefereeProxyPassthroughTester>)
+add_subdirectory(proxies)

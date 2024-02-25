@@ -37,7 +37,8 @@ class IController {
 
 class IBoard {
   <<interface>>
-  +GetScale() Vector*
+  +GetStart() Vector*
+  +GetSize() Vector*
   +GetAt(in const Vector position) Token*
   +SetAt(in constVector position, in const Token token)*
   +GetRange(in const Vector offset, in const Vector size) TokenBuffer*
