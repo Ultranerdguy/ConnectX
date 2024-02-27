@@ -1,1 +1,2 @@
 add_subdirectory(proxies)
+add_subdirectory(factory)

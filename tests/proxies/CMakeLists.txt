@@ -13,14 +13,14 @@ set(testSources
 )
 
 create_test_sourcelist(Tests 
-  common.cpp
+  proxies.cpp
   ${testTargets}
 )
 
-add_executable(Common ${Tests} ${testSources})
-target_link_libraries(Common connectX_lib)
+add_executable(Proxies ${Tests} ${testSources})
+target_link_libraries(Proxies connectX_lib)
 
 foreach (test ${testTargets})
   get_filename_component (TName ${test} NAME_WE)
-  add_test (NAME ${TName} COMMAND Common ${TName})
+  add_test (NAME ${TName} COMMAND Proxies ${TName})
 endforeach ()
