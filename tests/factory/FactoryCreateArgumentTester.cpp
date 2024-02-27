@@ -9,7 +9,7 @@ struct BuildVariable : ConnectX::IBuilder<int> {
   }
   virtual PointerType Create(char const* args) override {
     int value{};
-    if (sscanf_s(args, "%d", &value) != 1) {
+    if (sscanf(args, "%d", &value) != 1) {
       return nullptr;
     }
     return std::make_unique<int>(value);
