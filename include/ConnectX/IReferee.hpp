@@ -15,7 +15,8 @@ namespace ConnectX {
   };
 
   namespace Concept {
-    template <typename T> concept Referee = std::derived_from<T, IReferee>;
+    template <typename T>
+    concept Referee = std::derived_from<T, IReferee>;
   }
 }
 

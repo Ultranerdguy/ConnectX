@@ -15,7 +15,8 @@ namespace ConnectX {
   };
 
   namespace Concept {
-    template <typename T> concept Controller = std::derived_from<T, IController>;
+    template <typename T>
+    concept Controller = std::derived_from<T, IController>;
   }
 }
 

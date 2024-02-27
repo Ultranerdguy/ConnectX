@@ -14,7 +14,8 @@ namespace ConnectX {
   };
 
   namespace Concept {
-    template <typename T> concept Board = std::derived_from<T, IBoard>;
+    template <typename T>
+    concept Board = std::derived_from<T, IBoard>;
   }
 }
 

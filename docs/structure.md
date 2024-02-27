@@ -46,8 +46,8 @@ class IBoard {
 
 class IReferee {
   <<interface>>
-  +AddPlayer(in IController player);*
-  +SetBoard(in IBoard board)*;
+  +AddPlayer(in IController player)*
+  +SetBoard(in IBoard board)*
   +GetCurrentPlayer() IController*
   +PlayGame() IController**
 }
@@ -86,6 +86,27 @@ class BoardProxy {
 }
 ```
 The `Game` object takes ownership of the interfaces passed in. By combining this with proxy interface implementations, we can allow for optional ownership of the true interface target without compromising on the ownership design.
+
+To facilitate dynamically switching controllers (and referees and boards), a factory object should be created. To maintain this as a library, the application will create the factory and attach all the available builders to it.
+```mermaid
+classDiagram
+direction LR
+
+class Factory["Factory < T >"] {
+  +Add< U >(TArgs... args)
+  +ListAll() char const*[]
+  +Create(char const*) T
+}
+Factory *-- "*" IBuilder
+
+class IBuilder["IBuilder < T >"] {
+  <<interface>>
+  +GetRegisteredName() char const**
+  +GetArgumentList() char const**
+  +Create(char const* args) T*
+}
+```
+This is a justifiable use of templates, as each factory uses the same base logic, just with different types between them. This also ensures that each factory behaves the same way, simplifying the interface.
 
 ## Sequence Diagram
 ```mermaid
