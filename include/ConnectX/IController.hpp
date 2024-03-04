@@ -3,12 +3,15 @@
 
 #include <concepts>
 #include "Types.hpp"
-#include "IBoard.hpp"
 
 namespace ConnectX {
+  // Forward declerations
+  struct IBoard;
+  struct IReferee;
+  
   struct IController {
     virtual void AssignToken(Token const token) = 0;
-    virtual Vector GetMove(IBoard const& board) = 0;
+    virtual Vector GetMove(IReferee const& referee, IBoard const& board) = 0;
     virtual void OnWin() = 0;
     virtual void OnLose() = 0;
     virtual void OnDraw() = 0;

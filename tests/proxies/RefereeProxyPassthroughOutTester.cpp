@@ -13,8 +13,12 @@ int RefereeProxyPassthroughOutTester(int argc, char** const argv) {
   ZeroBoard board;
 
   using ConnectX::Equal;
-  bool const allPassed = Equal<ConnectX::IController const*>(proxy.GetCurrentPlayer(), &RefereeImpl::valueGetCurrentPlayer)
-    && Equal<ConnectX::IController const*>(proxy.PlayGame(), &RefereeImpl::valuePlayGame);
+  bool const allPassed = Equal<ConnectX::IController const*>(proxy.GetCurrentController(), &RefereeImpl::valueGetCurrentController)
+    && Equal(proxy.GetControllerCount(), RefereeImpl::valueGetControllerCount)
+    && Equal(proxy.GetHistory(0), RefereeImpl::valueGetHistory)
+    && Equal(proxy.GetHistoryRange(0,0), RefereeImpl::valueGetHistoryRange)
+    && Equal(proxy.GetHistorySize(), RefereeImpl::valueGetHistorySize)
+    && Equal(proxy.PlayGame(), RefereeImpl::valuePlayGame);
 
   return allPassed ? 0 : -1;
 }

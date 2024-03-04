@@ -10,7 +10,7 @@ int BoardProxyPassthroughOutTester(int argc, char** const argv) {
 
   using ConnectX::Equal;
   bool const allPassed = Equal(proxy.GetStart(), BoardImpl::valueGetStart)
-    && Equal(proxy.GetSize(), BoardImpl::valueGetSize)
+    && Equal(proxy.GetEnd(), BoardImpl::valueGetEnd)
     && Equal(proxy.GetAt({}), BoardImpl::valueGetAt)
     && Equal(proxy.GetRange({},{}), BoardImpl::valueGetRange);
 

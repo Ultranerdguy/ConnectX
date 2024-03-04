@@ -9,8 +9,9 @@ ControllerImpl::ControllerImpl(ControllerProxyResults& r)
 void ControllerImpl::AssignToken(ConnectX::Token const token) {
   results.assignToken = token;
 }
-ConnectX::Vector ControllerImpl::GetMove(ConnectX::IBoard const& board) {
-  results.getMove = &board;
+ConnectX::Vector ControllerImpl::GetMove(ConnectX::IReferee const& referee, ConnectX::IBoard const& board) {
+  results.getMove.referee = &referee;
+  results.getMove.board = &board;
   return valueGetMove;
 }
 void ControllerImpl::OnWin() {

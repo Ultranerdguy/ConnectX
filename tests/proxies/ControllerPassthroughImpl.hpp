@@ -6,7 +6,10 @@
 // For storing results of each proxy passthrough call
 struct ControllerProxyResults {
   ConnectX::Token assignToken{};
-  ConnectX::IBoard const* getMove = nullptr;
+  struct {
+    ConnectX::IReferee const* referee = nullptr;
+    ConnectX::IBoard const* board = nullptr;
+  } getMove{};
   bool onWin = false;
   bool onLose = false;
   bool onDraw = false;
@@ -18,7 +21,7 @@ struct ControllerImpl : public ConnectX::IController {
   ControllerImpl(ControllerProxyResults& r);
   
   virtual void AssignToken(ConnectX::Token const token) override;
-  virtual ConnectX::Vector GetMove(ConnectX::IBoard const& board) override;
+  virtual ConnectX::Vector GetMove(ConnectX::IReferee const& referee, ConnectX::IBoard const& board) override;
   virtual void OnWin() override;
   virtual void OnLose() override;
   virtual void OnDraw() override;

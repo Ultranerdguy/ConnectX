@@ -11,7 +11,7 @@ namespace ConnectX
     ControllerProxy(IController& controller);
 
     virtual void AssignToken(Token const token) override;
-    virtual Vector GetMove(IBoard const& board) override;
+    virtual Vector GetMove(IReferee const& referee, IBoard const& board) override;
     virtual void OnWin() override;
     virtual void OnLose() override;
     virtual void OnDraw() override;

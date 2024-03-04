@@ -6,17 +6,24 @@ The class structure is designed through interfaces to allow for implementers to 
 classDiagram
 direction TB
 class Game {
-  -IController[] players
+  -IController[] controllers
   -IReferee ruleset
   -IBoard board
   +RunGame() IController
-  +AddPlayer(in IController newplayer, in ...args)
+  +AddController(in IController newController, in ...args)
   +SetReferee(in IReferee newReferee)
   +SetBoard(in IBoard newBoard)
 }
 Game *-- "*" IController
 Game *-- IReferee
 Game *-- IBoard
+
+note for SingleMove "For storing history"
+class SingleMove {
+  Token token
+  IController* controller
+  Vector position
+}
 
 namespace Interfaces {
   class IController
@@ -29,7 +36,7 @@ namespace Interfaces {
 class IController {
   <<interface>>
   +AssignToken(in const Token token)*
-  +GetMove(in const IBoard board) Vector*
+  +GetMove(in const IReferee referee, in const IBoard board) Vector*
   +OnWin()*
   +OnLose()*
   +OnDraw()*
@@ -38,26 +45,30 @@ class IController {
 class IBoard {
   <<interface>>
   +GetStart() Vector*
-  +GetSize() Vector*
+  +GetEnd() Vector*
   +GetAt(in const Vector position) Token*
-  +SetAt(in constVector position, in const Token token)*
   +GetRange(in const Vector offset, in const Vector size) TokenBuffer*
+  +SetAt(in constVector position, in const Token token) bool*
 }
 
 class IReferee {
   <<interface>>
-  +AddPlayer(in IController player)*
+  +AddController(in IController controller)*
   +SetBoard(in IBoard board)*
-  +GetCurrentPlayer() IController*
-  +PlayGame() IController**
+  +PlayGame() IController[]*
+  +GetCurrentController() IController*
+  +GetControllerCount() unsigned int*
+  +GetHistory(in const int movesAgo) SingleMove*
+  +GetHistoryRange(in const int start, in const int size) SingleMove[]*
+  +GetHistoryLength() size_t*
 }
 
 note for INotify "For event callbacks. Currently<br/>not implemented, but proposed."
 class INotify {
   <<interface>>
   +OnStartGame()*
-  +OnStartTurn(in const IController player)*
-  +OnEndTurn(int const IController player)*
+  +OnStartTurn(in const IController controller)*
+  +OnEndTurn(int const IController controller)*
   +OnEndGame()*
 }
 
@@ -86,6 +97,30 @@ class BoardProxy {
 }
 ```
 The `Game` object takes ownership of the interfaces passed in. By combining this with proxy interface implementations, we can allow for optional ownership of the true interface target without compromising on the ownership design.
+
+`IController`
+- `AssignToken` : Allows the controller to be aware of its token
+- `GetMove` : Request to the controller to get the move it would make in this situation
+- `OnWin` : Event callback to the controller when this controller win the game. Win conditions are determined by the referee
+- `OnLose` : Event callback to the controller when this controller loses the game. Lose conditions are determined by the referee
+- `OnDraw` : Event callback to the controller when the game ends in a draw. Draw conditions are determined by the referee
+
+`IReferee`
+- `AddController` : Passes a contoller to the referee. **Does not** transfer ownership of the controller to the referee
+- `SetBoard` : Passes the board that the game is to be played on to the referee. **Does not** transfer owership of the board to the referee
+- `PlayGame` : Run the game loop. Returns an array of IControllers that won back to the game
+- `GetCurrentController` : Returns the current controller
+- `GetControllerCount` : Returns the number of controller's currently registered
+- `GetHistory` : Returns a single move at that point in history, counting backwards. A history index of `0` refers to the last move. History must track back far enough to include each controller's last move. An invalid history index returns a `0` token and a `nullptr` for controller (position is undefined)
+- `GetHistoryRange` : Returns an array of moves from the history
+- `GetHistorySize` : Returns the running size of the history object. May be variable with unusual rulesets
+
+`IBoard`
+- `GetStart` : Get the minimum position index
+- `GetEnd` : Get the maximum position index
+- `GetAt` : Get the token at a specified position. If the range is out of bounds, return `0`
+- `GetRange` : Get a dense copy of the board in a given range of coordinates. If any parts of the passed in range are out of bounds, return an empty array.
+- `SetAt` : Set the specified position to the token provided. If the position is out of bounds, return false
 
 To facilitate dynamically switching controllers (and referees and boards), a factory object should be created. To maintain this as a library, the application will create the factory and attach all the available builders to it.
 ```mermaid
@@ -117,17 +152,18 @@ sequenceDiagram
   create participant IReferee
   Game->>IReferee: Create referee
   create participant IController
-  Game->>IController: Create player
+  Game->>IController: Create controller
   create participant IBoard
   Game->>IBoard: Create board
   
   Note over Game,IBoard: Initialisation done, start playing
-  IReferee->>IController: On Start game
   loop while game running
     Note over IController,IReferee: Start of IController's turn<br/>as dictated by IReferee
-    IReferee->>IController: On Start turn
     loop while no valid move
       IReferee->>IController: Query move
+      Note over IReferee,IBoard: Controller queries in any order, any number of times, to make a decision
+      IController->>IReferee: Query history
+      IReferee->>IController: Return history
       IController->>IBoard: Query state
       IBoard->>IController: Return state
       IController->>IReferee: Return move
@@ -135,7 +171,6 @@ sequenceDiagram
       IBoard->>IReferee: Return move validity
     end
     IReferee->>IBoard: Make move
-    IReferee->>IController: On End turn
     IReferee->>IBoard: Query winner state
     IBoard->>IReferee: Return winner state
     alt Has a winner

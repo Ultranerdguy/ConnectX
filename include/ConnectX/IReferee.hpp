@@ -3,15 +3,22 @@
 
 #include <concepts>
 #include "Types.hpp"
-#include "IController.hpp"
-#include "IBoard.hpp"
+
 
 namespace ConnectX {
+  // Forward declarations
+  struct IController;
+  struct IBoard;
+  
   struct IReferee {
-    virtual void AddPlayer(IController& player) = 0;
+    virtual void AddController(IController& controller) = 0;
     virtual void SetBoard(IBoard& board) = 0;
-    virtual IController* GetCurrentPlayer() const = 0;
-    virtual IController* PlayGame() = 0;
+    virtual IController* GetCurrentController() const = 0;
+    virtual std::size_t GetControllerCount() const = 0;
+    virtual SingleMove GetHistory(std::size_t const index) const = 0;
+    virtual std::vector<SingleMove> GetHistoryRange(std::size_t const start, std::size_t const size) const = 0;
+    virtual std::size_t GetHistorySize() const = 0;
+    virtual std::vector<IController*> PlayGame() = 0;
   };
 
   namespace Concept {

@@ -9,8 +9,8 @@ ConnectX::Vector ConnectX::BoardProxy::GetStart() const {
   return m_board.GetStart();
 }
 
-ConnectX::SizeVector ConnectX::BoardProxy::GetSize() const {
-  return m_board.GetSize();
+ConnectX::Vector ConnectX::BoardProxy::GetEnd() const {
+  return m_board.GetEnd();
 }
 
 ConnectX::Token ConnectX::BoardProxy::GetAt(ConnectX::Vector const& position) const {
@@ -21,7 +21,7 @@ void ConnectX::BoardProxy::SetAt(ConnectX::Vector const& position, ConnectX::Tok
   m_board.SetAt(position, token);
 }
 
-ConnectX::TokenBuffer ConnectX::BoardProxy::GetRange(ConnectX::Vector const& start, ConnectX::SizeVector const& size) const {
-  return m_board.GetRange(start, size);
+ConnectX::TokenBuffer ConnectX::BoardProxy::GetRange(ConnectX::Vector const& start, ConnectX::Vector const& end) const {
+  return m_board.GetRange(start, end);
 }
 

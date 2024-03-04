@@ -11,7 +11,7 @@
 namespace ConnectX {
   class Game {
   public:
-    IController* RunGame();
+    std::vector<ConnectX::IController*> RunGame();
 
     template <Concept::Controller TController, typename ...TArgs>
     void AddPlayer(TArgs... args);

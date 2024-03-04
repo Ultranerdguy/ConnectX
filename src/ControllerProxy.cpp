@@ -1,4 +1,6 @@
 #include "ConnectX/ControllerProxy.hpp"
+#include "ConnectX/IReferee.hpp"
+#include "ConnectX/IBoard.hpp"
 
 ConnectX::ControllerProxy::ControllerProxy(ConnectX::IController& controller)
   : m_controller(controller)
@@ -9,8 +11,8 @@ void ConnectX::ControllerProxy::AssignToken(Token const token) {
   m_controller.AssignToken(token);
 }
 
-ConnectX::Vector ConnectX::ControllerProxy::GetMove(IBoard const& board) {
-  return m_controller.GetMove(board);
+ConnectX::Vector ConnectX::ControllerProxy::GetMove(IReferee const& referee, IBoard const& board) {
+  return m_controller.GetMove(referee, board);
 }
 
 void ConnectX::ControllerProxy::OnWin() {

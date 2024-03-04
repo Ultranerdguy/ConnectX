@@ -1,4 +1,5 @@
 #include <cstdio>
+#include "ZeroReferee.hpp"
 #include "ZeroBoard.hpp"
 #include "ControllerPassthroughImpl.hpp"
 
@@ -8,10 +9,11 @@ int ControllerProxyPassthroughOutTester(int argc, char** const argv) {
   ControllerImpl impl(passthroughResults);
   ConnectX::ControllerProxy proxy(impl);
 
+  ZeroReferee referee;
   ZeroBoard board;
 
   using ConnectX::Equal;
-  bool const allPassed = Equal(proxy.GetMove(board), ControllerImpl::valueGetMove);
+  bool const allPassed = Equal(proxy.GetMove(referee, board), ControllerImpl::valueGetMove);
 
   return allPassed ? 0 : -1;
 }

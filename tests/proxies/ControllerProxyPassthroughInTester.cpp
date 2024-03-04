@@ -1,4 +1,5 @@
 #include <cstdio>
+#include "ZeroReferee.hpp"
 #include "ZeroBoard.hpp"
 #include "ControllerPassthroughImpl.hpp"
 
@@ -10,17 +11,20 @@ int ControllerProxyPassthroughInTester(int argc, char** const argv) {
   ConnectX::ControllerProxy proxy(impl);
 
   ConnectX::Token const queryAssignToken = 7;
-  ZeroBoard const queryGetMove;
+
+  ZeroReferee const queryGetMoveReferee;
+  ZeroBoard const queryGetMoveBoard;
 
   proxy.AssignToken(queryAssignToken);
-  proxy.GetMove(queryGetMove);
+  proxy.GetMove(queryGetMoveReferee, queryGetMoveBoard);
   proxy.OnWin();
   proxy.OnLose();
   proxy.OnDraw();
 
   using ConnectX::Equal;
   bool const allPassed = Equal(passthroughResults.assignToken, queryAssignToken)
-    && Equal<ConnectX::IBoard const*>(passthroughResults.getMove, &queryGetMove)
+    && Equal<ConnectX::IReferee const*>(passthroughResults.getMove.referee, &queryGetMoveReferee)
+    && Equal<ConnectX::IBoard const*>(passthroughResults.getMove.board, &queryGetMoveBoard)
     && passthroughResults.onWin
     && passthroughResults.onLose
     && passthroughResults.onDraw;
