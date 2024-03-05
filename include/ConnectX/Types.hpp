@@ -3,16 +3,26 @@
 
 #include <cstdint>
 #include <vector>
+#include "Macros.hpp"
 
 namespace ConnectX {
   // Foward declerations
   struct IController;
 
   using VectorComponent = std::int64_t; // A position in one dimension of the board
-  using Vector = std::vector<VectorComponent>; // An N dimensional position vector
+
+  // An N dimensional position vector
+  class Vector : public std::vector<VectorComponent> {
+  public:
+    using std::vector<VectorComponent>::vector;
+  };
 
   using Token = std::uint64_t;
-  using TokenBuffer = std::vector<Token>;
+  // A buffer for tokens
+  class TokenBuffer : public std::vector<Token> {
+  public:
+    using std::vector<Token>::vector;
+  };
 
   struct SingleMove {
     Token token = 0;
