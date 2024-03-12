@@ -13,6 +13,7 @@ struct ControllerProxyResults {
   bool onWin = false;
   bool onLose = false;
   bool onDraw = false;
+  bool onGetController = false;
 };
 
 struct ControllerImpl : public ConnectX::IController {
@@ -25,6 +26,7 @@ struct ControllerImpl : public ConnectX::IController {
   virtual void OnWin() override;
   virtual void OnLose() override;
   virtual void OnDraw() override;
+  virtual ConnectX::IController& GetController() override;
 
 private:
   ControllerProxyResults& results;

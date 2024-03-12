@@ -23,3 +23,8 @@ void ControllerImpl::OnLose() {
 void ControllerImpl::OnDraw() {
   results.onDraw = true;
 }
+
+ConnectX::IController& ControllerImpl::GetController() {
+  results.onGetController = true;
+  return *this;
+}

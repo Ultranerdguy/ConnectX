@@ -13,7 +13,8 @@ int ControllerProxyPassthroughOutTester(int argc, char** const argv) {
   ZeroBoard board;
 
   using ConnectX::Equal;
-  bool const allPassed = Equal(proxy.GetMove(referee, board), ControllerImpl::valueGetMove);
+  bool const allPassed = Equal(proxy.GetMove(referee, board), ControllerImpl::valueGetMove)
+    && Equal<ConnectX::IController*>(&proxy.GetController(), &impl);
 
   return allPassed ? 0 : -1;
 }

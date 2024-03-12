@@ -20,6 +20,9 @@ public:
   }
   virtual void OnDraw() override {
   }
+  virtual ConnectX::IController& GetController() override {
+    return *this;
+  }
 };
 
 #endif // #ifndef _CONNECT_X_TESTS_ZERO_CONTROLLER_HPP_

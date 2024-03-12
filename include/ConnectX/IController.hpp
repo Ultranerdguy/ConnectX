@@ -15,6 +15,7 @@ namespace ConnectX {
     virtual void OnWin() = 0;
     virtual void OnLose() = 0;
     virtual void OnDraw() = 0;
+    virtual IController& GetController() = 0;
   };
 
   namespace Concept {

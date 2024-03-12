@@ -26,3 +26,7 @@ void ConnectX::ControllerProxy::OnLose() {
 void ConnectX::ControllerProxy::OnDraw() {
   m_controller.OnDraw();
 }
+
+ConnectX::IController& ConnectX::ControllerProxy::GetController() {
+  return m_controller.GetController();
+}

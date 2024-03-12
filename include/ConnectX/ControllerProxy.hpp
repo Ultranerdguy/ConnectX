@@ -15,6 +15,7 @@ namespace ConnectX
     virtual void OnWin() override;
     virtual void OnLose() override;
     virtual void OnDraw() override;
+    virtual IController& GetController() override;
 
   private:
     IController& m_controller;

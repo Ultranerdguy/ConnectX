@@ -20,6 +20,7 @@ int ControllerProxyPassthroughInTester(int argc, char** const argv) {
   proxy.OnWin();
   proxy.OnLose();
   proxy.OnDraw();
+  proxy.GetController();
 
   using ConnectX::Equal;
   bool const allPassed = Equal(passthroughResults.assignToken, queryAssignToken)
@@ -27,7 +28,8 @@ int ControllerProxyPassthroughInTester(int argc, char** const argv) {
     && Equal<ConnectX::IBoard const*>(passthroughResults.getMove.board, &queryGetMoveBoard)
     && passthroughResults.onWin
     && passthroughResults.onLose
-    && passthroughResults.onDraw;
+    && passthroughResults.onDraw
+    && passthroughResults.onGetController;
 
   return allPassed ? 0 : -1;
 }
