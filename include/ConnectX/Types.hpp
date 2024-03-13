@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <iostream>
 #include "Macros.hpp"
 
 namespace ConnectX {
@@ -57,5 +58,8 @@ bool ConnectX::Equal(std::vector<T> const& lhs, std::vector<T> const& rhs) {
 
 template <> 
 bool ConnectX::Equal<ConnectX::SingleMove>(ConnectX::SingleMove const& lhs, ConnectX::SingleMove const& rhs);
+
+std::istream& operator>>(std::istream& input, ConnectX::Vector& vector);
+std::ostream& operator<<(std::ostream& output, ConnectX::Vector const& vector);
 
 #endif // #ifndef _CONNECT_X_TYPES_HPP_
